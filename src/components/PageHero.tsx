@@ -22,7 +22,7 @@ export default function PageHero({ title, description, breadcrumbs, image }: Pro
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/95 to-primary-dark" />
-      <div className="relative max-w-[1200px] mx-auto px-5 lg:px-6 pt-36 lg:pt-44 pb-16 lg:pb-20 min-h-[280px] lg:min-h-[340px] flex flex-col justify-end">
+      <div className="relative max-w-[1200px] mx-auto px-5 lg:px-6 h-[320px] lg:h-[380px] flex flex-col justify-end pb-12 lg:pb-14">
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="flex items-center gap-1.5 text-sm text-white/40">
             {breadcrumbs.map((crumb, i) => (
