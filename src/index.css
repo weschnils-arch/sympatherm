@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2980B9;
+  --color-primary-dark: #1F6A9A;
+  --color-primary-light: #5DA3CF;
+  --color-accent: #D93240;
+  --color-secondary: #1C1917;
+  --color-secondary-light: #78716C;
+  --color-bg: #FAF9F6;
+  --color-bg-dark: #171412;
+  --color-white: #FFFFFF;
+  --color-border: #E7E5E4;
+  --color-warm: #F5F0EB;
+
+  --font-heading: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'DM Serif Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/dmserifdisplay/v15/-nFnOHM81r4j6k0gjAW3mujVU2B2G_5x0g.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2') format('woff2');
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-secondary);
+  background-color: var(--color-bg);
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.1;
+  font-weight: 400;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Prose styling for legal pages */
+.prose h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--color-secondary); }
+.prose h3 { font-size: 1.2rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--color-secondary); }
+.prose p { margin-bottom: 1rem; line-height: 1.7; color: var(--color-secondary-light); }
+.prose ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+.prose li { margin-bottom: 0.5rem; line-height: 1.7; color: var(--color-secondary-light); }
+.prose a { color: var(--color-primary); text-decoration: underline; }
+.prose strong { color: var(--color-secondary); }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
