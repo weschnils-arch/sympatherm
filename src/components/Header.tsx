@@ -41,14 +41,17 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* Main nav bar - always white, full-width */}
       <nav
-        className={`w-full bg-white border-b border-border transition-shadow duration-300 ${
-          isScrolled ? 'shadow-sm' : ''
+        className={`w-full border-b transition-all duration-300 ${
+          isScrolled
+            ? 'bg-white/70 backdrop-blur-xl backdrop-saturate-150 border-white/30 shadow-sm shadow-black/[0.04]'
+            : 'bg-white/90 backdrop-blur-md border-border'
         }`}
         aria-label="Hauptnavigation"
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-6 flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
-          <Link to="/" className="z-10" aria-label="SYMPATHERM Startseite">
+          <Link to="/" className="flex items-center gap-2 z-10" aria-label="SYMPATHERM Startseite">
+            <img src="/favicon.png" alt="" className="h-6 w-6 object-contain" />
             <span className="font-body font-bold tracking-[0.15em] text-[17px] text-secondary">
               SYMPATHERM
             </span>

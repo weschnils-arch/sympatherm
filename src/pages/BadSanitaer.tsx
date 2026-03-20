@@ -39,6 +39,7 @@ export default function BadSanitaer() {
       <PageHero
         title="Bad & Sanitär – Ihr Traumbad wartet"
         description="Badgestaltung und Badsanierung nach Ihren individuellen Wünschen. Planung, Ausführung und Beratung."
+        image="/images/products/idm-hygienik.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Leistungen', path: '/' },

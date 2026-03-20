@@ -66,10 +66,26 @@ export default function Home() {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
-    // Hero entrance — text column
-    gsap.fromTo('.hero-text > *',
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.9, stagger: 0.15, ease: 'power3.out', delay: 0.3 }
+    // Hero entrance — label slide in from left
+    gsap.fromTo('.hero-label',
+      { opacity: 0, x: -30 },
+      { opacity: 1, x: 0, duration: 0.8, ease: 'power3.out', delay: 0.1 }
+    )
+
+    // Hero entrance — split text reveal
+    const heroHeading = document.querySelector('.hero-heading')
+    if (heroHeading) {
+      const lines = heroHeading.querySelectorAll('.line')
+      gsap.fromTo(lines,
+        { opacity: 0, y: 60, rotateX: -15 },
+        { opacity: 1, y: 0, rotateX: 0, duration: 1.2, stagger: 0.12, ease: 'power4.out', delay: 0.2 }
+      )
+    }
+
+    // Hero entrance — description and CTAs stagger in
+    gsap.fromTo('.hero-body > *',
+      { opacity: 0, y: 25 },
+      { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.8 }
     )
 
     // Hero entrance — image column
@@ -77,6 +93,19 @@ export default function Home() {
       { opacity: 0, y: 40, scale: 0.97 },
       { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', delay: 0.5 }
     )
+
+    // Parallax on hero image
+    const heroImg = document.querySelector('.hero-image')
+    const onScroll = () => {
+      const scrollY = window.scrollY
+      const parallax = scrollY * 0.15
+      if (scrollY < window.innerHeight) {
+        (heroImg as HTMLElement).style.transform = `translateY(${parallax}px)`
+      }
+    }
+    if (heroImg) {
+      window.addEventListener('scroll', onScroll, { passive: true })
+    }
 
     // Hero entrance — floating card
     gsap.fromTo('.hero-float-card',
@@ -92,11 +121,11 @@ export default function Home() {
 
     // Services scroll animation
     const serviceCards = document.querySelectorAll('.service-card')
-    gsap.set(serviceCards, { opacity: 0, y: 50 })
+    gsap.set(serviceCards, { opacity: 0, y: 60, scale: 0.95 })
     const servicesObs = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          gsap.fromTo(serviceCards, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out' })
+          gsap.fromTo(serviceCards, { opacity: 0, y: 60, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.12, ease: 'power3.out' })
           servicesObs.disconnect()
         }
       })
@@ -142,7 +171,7 @@ export default function Home() {
     }, { threshold: 0.2 })
     if (partnersRef.current) partnersObs.observe(partnersRef.current)
 
-    return () => { servicesObs.disconnect(); aboutObs.disconnect(); projectsObs.disconnect(); partnersObs.disconnect() }
+    return () => { servicesObs.disconnect(); aboutObs.disconnect(); projectsObs.disconnect(); partnersObs.disconnect(); window.removeEventListener('scroll', onScroll) }
   }, [])
 
   // Hero slideshow timer
@@ -156,43 +185,46 @@ export default function Home() {
   return (
     <>
       {/* ===== HERO ===== */}
-      <section ref={heroRef} className="min-h-screen bg-bg flex flex-col">
+      <section ref={heroRef} className="min-h-screen bg-bg flex flex-col relative">
+        <div className="pointer-events-none absolute inset-0 z-10 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
         <div className="flex-1 flex items-center">
           <div className="max-w-[1200px] mx-auto px-5 lg:px-6 w-full py-24 lg:py-0">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
 
               {/* Left column — text */}
               <div className="lg:col-span-7 hero-text">
-                <p className="font-body text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
+                <p className="hero-label font-body text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
                   Ihr Partner seit 1974
                 </p>
 
-                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-secondary leading-[1.05]">
-                  Heizung,<br />
-                  Fliesen,<br />
-                  <span className="text-primary">Bad & Sanitär</span>
+                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-secondary leading-[1.15] hero-heading" style={{ perspective: '1000px' }}>
+                  <span className="line block"><span className="block">Heizung,</span></span>
+                  <span className="line block"><span className="block">Fliesen,</span></span>
+                  <span className="line block"><span className="block text-primary">Bad & Sanitär</span></span>
                 </h1>
 
-                <p className="font-body text-lg text-secondary-light mt-6 max-w-md leading-relaxed">
-                  Beratung, Planung und Ausführung aus einer Hand.
-                  Ihr zuverlässiger Partner im Bezirk Baden.
-                </p>
+                <div className="hero-body">
+                  <p className="font-body text-lg text-secondary-light mt-6 max-w-md leading-relaxed">
+                    Beratung, Planung und Ausführung aus einer Hand.
+                    Ihr zuverlässiger Partner im Bezirk Baden.
+                  </p>
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-10">
-                  <Link
-                    to="/kontakt"
-                    className="group inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-lg font-semibold text-base hover:bg-primary-dark transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
-                  >
-                    Jetzt Beratung anfordern
-                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                  </Link>
-                  <Link
-                    to="/unternehmen"
-                    className="group inline-flex items-center gap-2 text-secondary-light hover:text-secondary font-medium text-base transition-colors duration-300"
-                  >
-                    Schauraum besuchen
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                  </Link>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-10">
+                    <Link
+                      to="/kontakt"
+                      className="group inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-lg font-semibold text-base hover:bg-primary-dark transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
+                    >
+                      Jetzt Beratung anfordern
+                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    </Link>
+                    <Link
+                      to="/unternehmen"
+                      className="group inline-flex items-center gap-2 text-secondary-light hover:text-secondary font-medium text-base transition-colors duration-300"
+                    >
+                      Schauraum besuchen
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                    </Link>
+                  </div>
                 </div>
               </div>
 
@@ -205,7 +237,11 @@ export default function Home() {
                         key={src}
                         src={src}
                         alt="SYMPATHERM"
-                        className={`absolute inset-0 w-full h-full object-cover rounded-2xl transition-opacity duration-1000 ease-in-out ${i === activeSlide ? 'opacity-100' : 'opacity-0'}`}
+                        className={`absolute inset-0 w-full h-full object-cover rounded-2xl ${i === activeSlide ? 'opacity-100' : 'opacity-0'}`}
+                        style={{
+                          transform: i === activeSlide ? 'scale(1.08)' : 'scale(1)',
+                          transition: 'transform 4.5s ease-out, opacity 1s ease-in-out',
+                        }}
                         loading={i === 0 ? 'eager' : 'lazy'}
                         width={600}
                         height={800}
@@ -227,7 +263,7 @@ export default function Home() {
                   </div>
 
                   {/* Floating accent card */}
-                  <div className="hero-float-card absolute -bottom-6 -left-6 bg-white rounded-xl p-5 shadow-lg border border-border">
+                  <div className="hero-float-card absolute -bottom-6 -left-6 bg-white/70 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-5 shadow-lg shadow-black/[0.06] border border-white/40">
                     <div className="font-heading text-2xl text-primary">50+</div>
                     <div className="font-body text-sm text-secondary-light">Jahre Erfahrung</div>
                   </div>
@@ -335,7 +371,7 @@ export default function Home() {
               {stats.map((stat, i) => (
                 <div
                   key={i}
-                  className="bg-white border border-border rounded-xl p-6"
+                  className="bg-white/60 backdrop-blur-lg border border-white/40 rounded-2xl p-6 shadow-sm shadow-black/[0.03] hover:shadow-md hover:-translate-y-0.5 transition-all duration-300"
                 >
                   <div className="font-heading text-3xl lg:text-4xl text-primary mb-1">{stat.value}</div>
                   <div className="text-secondary-light text-sm font-body">{stat.label}</div>

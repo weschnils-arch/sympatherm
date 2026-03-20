@@ -24,6 +24,7 @@ export default function Unternehmen() {
       <PageHero
         title="Über SYMPATHERM"
         description="Handel und Dienstleistung auf höchstem Niveau seit über 50 Jahren."
+        image="/images/products/idm-ipump.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Unternehmen' },

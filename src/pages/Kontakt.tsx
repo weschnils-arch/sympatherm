@@ -10,6 +10,7 @@ export default function Kontakt() {
       <PageHero
         title="Kontakt aufnehmen"
         description="Wir freuen uns auf Ihre Anfrage. Schreiben Sie uns oder besuchen Sie unseren Schauraum."
+        image="/images/products/idm-aero-alm.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Kontakt' },

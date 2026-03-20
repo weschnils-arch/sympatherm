@@ -51,6 +51,7 @@ export default function Fliesen() {
       <PageHero
         title="Fliesen – Form, Farbe und Funktion"
         description="Hochwertige Wand- und Bodenfliesen in unserem 300 m² Schauraum in Leobersdorf."
+        image="/images/systems/verteiler.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Leistungen', path: '/' },

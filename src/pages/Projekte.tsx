@@ -18,6 +18,7 @@ export default function Projekte() {
       <PageHero
         title="Unsere Projekte"
         description="Ausgewählte Referenzen aus den Bereichen Wärmepumpen, Fußbodenheizung und Badsanierung."
+        image="/images/projects/daikin-wien.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Projekte' },
