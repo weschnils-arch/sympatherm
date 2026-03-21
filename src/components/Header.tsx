@@ -37,14 +37,16 @@ export default function Header() {
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
+  const isHome = location.pathname === '/'
+  const isTransparent = isHome && !isScrolled
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
-      {/* Main nav bar - always white, full-width */}
       <nav
-        className={`w-full border-b transition-all duration-300 ${
-          isScrolled
-            ? 'bg-white/70 backdrop-blur-xl backdrop-saturate-150 border-white/30 shadow-sm shadow-black/[0.04]'
-            : 'bg-white/90 backdrop-blur-md border-border'
+        className={`w-full border-b transition-all duration-500 ${
+          isTransparent
+            ? 'bg-transparent border-white/10'
+            : 'bg-white/70 backdrop-blur-xl backdrop-saturate-150 border-white/30 shadow-sm shadow-black/[0.04]'
         }`}
         aria-label="Hauptnavigation"
       >
@@ -52,7 +54,7 @@ export default function Header() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 z-10" aria-label="SYMPATHERM Startseite">
             <img src="/favicon.png" alt="" className="h-6 w-6 object-contain" />
-            <span className="font-body font-bold tracking-[0.15em] text-[17px] text-secondary">
+            <span className={`font-body font-bold tracking-[0.15em] text-[17px] transition-colors duration-500 ${isTransparent ? 'text-white' : 'text-secondary'}`}>
               SYMPATHERM
             </span>
           </Link>
@@ -64,7 +66,7 @@ export default function Header() {
               className={`px-3.5 py-2 text-sm font-medium font-body transition-colors ${
                 location.pathname === '/'
                   ? 'text-primary'
-                  : 'text-secondary-light hover:text-secondary'
+                  : isTransparent ? 'text-white/70 hover:text-white' : 'text-secondary-light hover:text-secondary'
               }`}
             >
               Home
@@ -76,7 +78,7 @@ export default function Header() {
                 className={`flex items-center gap-1 px-3.5 py-2 text-sm font-medium font-body transition-colors ${
                   services.some(s => location.pathname === s.path)
                     ? 'text-primary'
-                    : 'text-secondary-light hover:text-secondary'
+                    : isTransparent ? 'text-white/70 hover:text-white' : 'text-secondary-light hover:text-secondary'
                 }`}
                 aria-expanded={showServices}
                 aria-haspopup="true"
@@ -110,7 +112,7 @@ export default function Header() {
                 className={`px-3.5 py-2 text-sm font-medium font-body transition-colors ${
                   location.pathname === link.path
                     ? 'text-primary'
-                    : 'text-secondary-light hover:text-secondary'
+                    : isTransparent ? 'text-white/70 hover:text-white' : 'text-secondary-light hover:text-secondary'
                 }`}
               >
                 {link.name}
@@ -119,7 +121,11 @@ export default function Header() {
 
             <Link
               to="/kontakt"
-              className="ml-4 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-semibold font-body hover:bg-primary-dark hover:shadow-md hover:shadow-primary/20 transition-all"
+              className={`ml-4 px-5 py-2.5 rounded-lg text-sm font-semibold font-body transition-all ${
+                isTransparent
+                  ? 'bg-white/10 backdrop-blur-sm text-white border border-white/20 hover:bg-white/20'
+                  : 'bg-primary text-white hover:bg-primary-dark hover:shadow-md hover:shadow-primary/20'
+              }`}
             >
               Jetzt anfragen
             </Link>
@@ -127,7 +133,7 @@ export default function Header() {
 
           {/* Mobile Toggle */}
           <button
-            className="lg:hidden z-10 p-2 -mr-2 text-secondary transition-colors"
+            className={`lg:hidden z-10 p-2 -mr-2 transition-colors ${isTransparent ? 'text-white' : 'text-secondary'}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Menü schließen' : 'Menü öffnen'}
             aria-expanded={isOpen}

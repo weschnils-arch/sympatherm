@@ -39,10 +39,8 @@ const stats = [
 ]
 
 const heroSlides = [
-  '/images/products/idm-ipump.webp',
-  '/images/products/idm-aero-alm.webp',
-  '/images/products/daikin-epsk.webp',
-  '/images/products/idm-hygienik.webp',
+  '/images/hero-bathroom.webp',
+  '/images/hero-bathroom-2.webp',
 ]
 
 const partners = ['iDM', 'Daikin', 'Kaldewei', 'Villeroy & Boch', 'Grohe', 'Geberit']
@@ -88,30 +86,18 @@ export default function Home() {
       { opacity: 1, y: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out', delay: 0.8 }
     )
 
-    // Hero entrance — image column
-    gsap.fromTo('.hero-image',
-      { opacity: 0, y: 40, scale: 0.97 },
-      { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'power3.out', delay: 0.5 }
-    )
-
-    // Parallax on hero image
-    const heroImg = document.querySelector('.hero-image')
+    // Parallax on hero background
+    const heroBgSlides = document.querySelectorAll('.hero-bg-slide')
     const onScroll = () => {
       const scrollY = window.scrollY
-      const parallax = scrollY * 0.15
       if (scrollY < window.innerHeight) {
-        (heroImg as HTMLElement).style.transform = `translateY(${parallax}px)`
+        const parallax = scrollY * 0.3
+        heroBgSlides.forEach(slide => {
+          (slide as HTMLElement).style.transform = `translateY(${parallax}px) scale(1.05)`
+        })
       }
     }
-    if (heroImg) {
-      window.addEventListener('scroll', onScroll, { passive: true })
-    }
-
-    // Hero entrance — floating card
-    gsap.fromTo('.hero-float-card',
-      { opacity: 0, y: 20, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power3.out', delay: 1.0 }
-    )
+    window.addEventListener('scroll', onScroll, { passive: true })
 
     // Hero stats strip
     gsap.fromTo('.hero-stat',
@@ -171,10 +157,12 @@ export default function Home() {
     }, { threshold: 0.2 })
     if (partnersRef.current) partnersObs.observe(partnersRef.current)
 
-    return () => { servicesObs.disconnect(); aboutObs.disconnect(); projectsObs.disconnect(); partnersObs.disconnect(); window.removeEventListener('scroll', onScroll) }
+    return () => {
+      servicesObs.disconnect(); aboutObs.disconnect(); projectsObs.disconnect(); partnersObs.disconnect()
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
-  // Hero slideshow timer
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveSlide(prev => (prev + 1) % heroSlides.length)
@@ -184,110 +172,86 @@ export default function Home() {
 
   return (
     <>
-      {/* ===== HERO ===== */}
-      <section ref={heroRef} className="min-h-screen bg-bg flex flex-col relative">
-        <div className="pointer-events-none absolute inset-0 z-10 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
-        <div className="flex-1 flex items-center">
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-6 w-full py-24 lg:py-0">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      {/* ===== HERO — Full-bleed immersive ===== */}
+      <section ref={heroRef} className="relative min-h-screen flex flex-col overflow-hidden">
+        {/* Background slideshow */}
+        {heroSlides.map((src, i) => (
+          <img
+            key={src}
+            src={src}
+            alt=""
+            className={`hero-bg-slide absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === activeSlide ? 'opacity-100' : 'opacity-0'}`}
+            style={{ transform: 'scale(1.05)' }}
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchPriority={i === 0 ? 'high' : undefined}
+            aria-hidden="true"
+          />
+        ))}
 
-              {/* Left column — text */}
-              <div className="lg:col-span-7 hero-text">
-                <p className="hero-label font-body text-xs font-semibold uppercase tracking-[0.2em] text-primary mb-6">
-                  Ihr Partner seit 1974
+        {/* Dark gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/70 to-secondary/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-secondary/40" />
+
+        {/* Grain texture */}
+        <div className="pointer-events-none absolute inset-0 z-10 opacity-[0.04]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")', backgroundRepeat: 'repeat', backgroundSize: '128px 128px' }} />
+
+        {/* Content */}
+        <div className="relative z-20 flex-1 flex items-center">
+          <div className="max-w-[1200px] mx-auto px-5 lg:px-6 w-full py-32 lg:py-0">
+            <div className="max-w-2xl">
+              <p className="hero-label font-body text-xs font-semibold uppercase tracking-[0.25em] text-primary-light mb-6">
+                Ihr Partner seit 1974
+              </p>
+
+              <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-white leading-[1.1] hero-heading" style={{ perspective: '1000px' }}>
+                <span className="line block"><span className="block">Heizung,</span></span>
+                <span className="line block"><span className="block">Fliesen,</span></span>
+                <span className="line block"><span className="block text-primary-light">Bad & Sanitär</span></span>
+              </h1>
+
+              <div className="hero-body">
+                <p className="font-body text-lg text-white/70 mt-6 max-w-md leading-relaxed">
+                  Beratung, Planung und Ausführung aus einer Hand.
+                  Ihr zuverlässiger Partner im Bezirk Baden.
                 </p>
 
-                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-[5.5rem] text-secondary leading-[1.15] hero-heading" style={{ perspective: '1000px' }}>
-                  <span className="line block"><span className="block">Heizung,</span></span>
-                  <span className="line block"><span className="block">Fliesen,</span></span>
-                  <span className="line block"><span className="block text-primary">Bad & Sanitär</span></span>
-                </h1>
-
-                <div className="hero-body">
-                  <p className="font-body text-lg text-secondary-light mt-6 max-w-md leading-relaxed">
-                    Beratung, Planung und Ausführung aus einer Hand.
-                    Ihr zuverlässiger Partner im Bezirk Baden.
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-10">
-                    <Link
-                      to="/kontakt"
-                      className="group inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-lg font-semibold text-base hover:bg-primary-dark transition-all duration-300 hover:shadow-xl hover:shadow-primary/25"
-                    >
-                      Jetzt Beratung anfordern
-                      <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </Link>
-                    <Link
-                      to="/unternehmen"
-                      className="group inline-flex items-center gap-2 text-secondary-light hover:text-secondary font-medium text-base transition-colors duration-300"
-                    >
-                      Schauraum besuchen
-                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                    </Link>
-                  </div>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-10">
+                  <Link
+                    to="/kontakt"
+                    className="group inline-flex items-center justify-center gap-2 bg-primary text-white px-7 py-3.5 rounded-lg font-semibold text-base hover:bg-primary-dark transition-all duration-300 hover:shadow-xl hover:shadow-primary/30"
+                  >
+                    Jetzt Beratung anfordern
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  </Link>
+                  <Link
+                    to="/unternehmen"
+                    className="group inline-flex items-center gap-2 text-white/60 hover:text-white font-medium text-base transition-colors duration-300"
+                  >
+                    Schauraum besuchen
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
-
-              {/* Right column — image slideshow */}
-              <div className="lg:col-span-5 relative hero-image">
-                <div className="relative">
-                  <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-black/10 aspect-[3/4]">
-                    {heroSlides.map((src, i) => (
-                      <img
-                        key={src}
-                        src={src}
-                        alt="SYMPATHERM"
-                        className={`absolute inset-0 w-full h-full object-cover rounded-2xl ${i === activeSlide ? 'opacity-100' : 'opacity-0'}`}
-                        style={{
-                          transform: i === activeSlide ? 'scale(1.08)' : 'scale(1)',
-                          transition: 'transform 4.5s ease-out, opacity 1s ease-in-out',
-                        }}
-                        loading={i === 0 ? 'eager' : 'lazy'}
-                        width={600}
-                        height={800}
-                        fetchPriority={i === 0 ? 'high' : undefined}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Slide indicators */}
-                  <div className="absolute bottom-4 right-4 flex gap-1.5 z-10">
-                    {heroSlides.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={() => setActiveSlide(i)}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeSlide ? 'bg-white w-6' : 'bg-white/40'}`}
-                        aria-label={`Bild ${i + 1}`}
-                      />
-                    ))}
-                  </div>
-
-                  {/* Floating accent card */}
-                  <div className="hero-float-card absolute -bottom-6 -left-6 bg-white/70 backdrop-blur-xl backdrop-saturate-150 rounded-2xl p-5 shadow-lg shadow-black/[0.06] border border-white/40">
-                    <div className="font-heading text-2xl text-primary">50+</div>
-                    <div className="font-body text-sm text-secondary-light">Jahre Erfahrung</div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
 
-        {/* Bottom stats strip */}
-        <div className="border-t border-border">
-          <div className="max-w-[1200px] mx-auto px-5 lg:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 py-6">
-            {[
-              { val: '40.000 m²', lbl: 'Fußbodenheizung / Jahr' },
-              { val: '5–6 t', lbl: 'Fliesen / Tag' },
-              { val: '200+', lbl: 'Sanierte Bäder / Jahr' },
-              { val: '50+', lbl: 'Jahre Erfahrung' },
-            ].map((s, i) => (
-              <div key={i} className="hero-stat text-center">
-                <div className="font-heading text-2xl text-secondary">{s.val}</div>
-                <div className="font-body text-xs text-secondary-light mt-1">{s.lbl}</div>
-              </div>
-            ))}
+        {/* Bottom stats strip — glass */}
+        <div className="relative z-20 border-t border-white/10">
+          <div className="bg-white/[0.06] backdrop-blur-xl">
+            <div className="max-w-[1200px] mx-auto px-5 lg:px-6 grid grid-cols-2 md:grid-cols-4 gap-6 py-6">
+              {[
+                { val: '40.000 m²', lbl: 'Fußbodenheizung / Jahr' },
+                { val: '5–6 t', lbl: 'Fliesen / Tag' },
+                { val: '200+', lbl: 'Sanierte Bäder / Jahr' },
+                { val: '50+', lbl: 'Jahre Erfahrung' },
+              ].map((s, i) => (
+                <div key={i} className="hero-stat text-center">
+                  <div className="font-heading text-2xl text-white">{s.val}</div>
+                  <div className="font-body text-xs text-white/50 mt-1">{s.lbl}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
