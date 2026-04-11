@@ -39,7 +39,7 @@ export default function BadSanitaer() {
       <PageHero
         title="Bad & Sanitär – Ihr Traumbad wartet"
         description="Badgestaltung und Badsanierung nach Ihren individuellen Wünschen. Planung, Ausführung und Beratung."
-        image="/images/products/idm-hygienik.webp"
+        image="/images/bad/bad-modern.webp"
         breadcrumbs={[
           { label: 'Home', path: '/' },
           { label: 'Leistungen', path: '/' },
@@ -66,6 +66,27 @@ export default function BadSanitaer() {
                 <p className="text-sm text-secondary-light leading-relaxed">{step.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Bathroom Gallery */}
+      <section className="py-20 lg:py-28 bg-white border-t border-border">
+        <div className="max-w-[1200px] mx-auto px-5 lg:px-6">
+          <div className="max-w-2xl mb-14">
+            <span className="text-primary font-body text-xs font-semibold uppercase tracking-[0.2em] mb-3 block">Inspiration</span>
+            <h2 className="font-heading text-3xl lg:text-[2.75rem] text-secondary mb-4 tracking-tight">Badezimmer-Welten</h2>
+            <p className="text-lg text-secondary-light leading-relaxed">
+              Von modern-minimalistisch bis klassisch-elegant – lassen Sie sich von unseren Beispielen inspirieren.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div className="overflow-hidden rounded-xl">
+              <img src="/images/bad/bad-marble.webp" alt="Marmor-Badezimmer mit Regendusche" className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700" loading="lazy" />
+            </div>
+            <div className="overflow-hidden rounded-xl">
+              <img src="/images/bad/bad-modern.webp" alt="Modernes Bad mit freistehender Badewanne" className="w-full h-full object-cover aspect-[4/3] hover:scale-105 transition-transform duration-700" loading="lazy" />
+            </div>
           </div>
         </div>
       </section>

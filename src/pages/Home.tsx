@@ -21,13 +21,13 @@ const services = [
     title: 'Fliesen',
     description: 'Wand- & Bodenfliesen für jeden Stil.',
     path: '/fliesen',
-    image: '/images/systems/verteiler.webp',
+    image: '/images/fliesen/nyra-star.webp',
   },
   {
     title: 'Bad & Sanitär',
     description: 'Planung & Ausführung aus einer Hand.',
     path: '/bad-sanitaer',
-    image: '/images/products/idm-hygienik.webp',
+    image: '/images/bad/bad-marble.webp',
   },
 ]
 
@@ -46,10 +46,10 @@ const heroSlides = [
 const partners = ['iDM', 'Daikin', 'Kaldewei', 'Villeroy & Boch', 'Grohe', 'Geberit']
 
 const projects = [
-  { src: '/images/projects/daikin-wien.webp', title: 'Wärmepumpe Wien', label: 'Wien' },
-  { src: '/images/projects/idm-laxenburg.webp', title: 'iDM iPump Laxenburg', label: 'Laxenburg' },
-  { src: '/images/projects/idm-guntramsdorf.webp', title: 'Wärmepumpe Guntramsdorf', label: 'Guntramsdorf' },
-  { src: '/images/projects/daikin-ebreichsdorf.webp', title: 'Daikin Ebreichsdorf', label: 'Ebreichsdorf' },
+  { src: '/images/projects/daikin-wien.webp', title: 'Wärmepumpe Wien', label: 'Wien', slug: 'waermepumpe-wien' },
+  { src: '/images/projects/idm-laxenburg.webp', title: 'iDM iPump Laxenburg', label: 'Laxenburg', slug: 'idm-ipump-laxenburg' },
+  { src: '/images/projects/idm-guntramsdorf.webp', title: 'Wärmepumpe Guntramsdorf', label: 'Guntramsdorf', slug: 'idm-ipump-guntramsdorf' },
+  { src: '/images/projects/daikin-ebreichsdorf.webp', title: 'Daikin Ebreichsdorf', label: 'Ebreichsdorf', slug: 'daikin-ebreichsdorf' },
 ]
 
 export default function Home() {
@@ -212,7 +212,7 @@ export default function Home() {
               <div className="hero-body">
                 <p className="font-body text-lg text-white/70 mt-6 max-w-md leading-relaxed">
                   Beratung, Planung und Ausführung aus einer Hand.
-                  Ihr zuverlässiger Partner im Bezirk Baden.
+                  Ihr zuverlässiger Partner in Leobersdorf.
                 </p>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mt-10">
@@ -370,7 +370,7 @@ export default function Home() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {projects.map((p, i) => (
-              <Link to="/projekte" key={i} className="project-card group relative overflow-hidden rounded-xl aspect-[3/4]">
+              <Link to={`/projekte/${p.slug}`} key={i} className="project-card group relative overflow-hidden rounded-xl aspect-[3/4]">
                 <img
                   src={p.src}
                   alt={p.title}

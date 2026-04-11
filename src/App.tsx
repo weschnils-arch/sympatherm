@@ -10,6 +10,7 @@ const Fliesen = lazy(() => import('./pages/Fliesen'))
 const BadSanitaer = lazy(() => import('./pages/BadSanitaer'))
 const Unternehmen = lazy(() => import('./pages/Unternehmen'))
 const Projekte = lazy(() => import('./pages/Projekte'))
+const ProjektDetail = lazy(() => import('./pages/ProjektDetail'))
 const Kontakt = lazy(() => import('./pages/Kontakt'))
 const Impressum = lazy(() => import('./pages/Impressum'))
 const Datenschutz = lazy(() => import('./pages/Datenschutz'))
@@ -41,6 +42,7 @@ export default function App() {
           <Route path="/bad-sanitaer" element={<Suspense fallback={<Loading />}><BadSanitaer /></Suspense>} />
           <Route path="/unternehmen" element={<Suspense fallback={<Loading />}><Unternehmen /></Suspense>} />
           <Route path="/projekte" element={<Suspense fallback={<Loading />}><Projekte /></Suspense>} />
+          <Route path="/projekte/:slug" element={<Suspense fallback={<Loading />}><ProjektDetail /></Suspense>} />
           <Route path="/kontakt" element={<Suspense fallback={<Loading />}><Kontakt /></Suspense>} />
           <Route path="/impressum" element={<Suspense fallback={<Loading />}><Impressum /></Suspense>} />
           <Route path="/datenschutz" element={<Suspense fallback={<Loading />}><Datenschutz /></Suspense>} />

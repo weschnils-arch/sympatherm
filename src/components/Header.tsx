@@ -38,7 +38,7 @@ export default function Header() {
   }, [isOpen])
 
   const isHome = location.pathname === '/'
-  const isTransparent = isHome && !isScrolled
+  const isTransparent = isHome && !isScrolled && !isOpen
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -144,7 +144,7 @@ export default function Header() {
       </nav>
 
       {/* Mobile Menu - solid white, full screen */}
-      <div className={`fixed inset-0 bg-white z-40 lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      <div className={`fixed inset-0 bg-white z-30 lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className="pt-28 px-6 pb-8 h-full overflow-y-auto">
           <div className="flex flex-col">
             <Link to="/" className={`py-3.5 text-lg font-medium font-body border-b border-border ${location.pathname === '/' ? 'text-primary' : 'text-secondary'}`}>
