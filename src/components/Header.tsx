@@ -52,7 +52,7 @@ export default function Header() {
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-6 flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 z-10" aria-label="SYMPATHERM Startseite">
+          <Link to="/" className="relative flex items-center gap-2 z-40" aria-label="SYMPATHERM Startseite">
             <img src="/favicon.png" alt="" className="h-6 w-6 object-contain" />
             <span className={`font-body font-bold tracking-[0.15em] text-[17px] transition-colors duration-500 ${isTransparent ? 'text-white' : 'text-secondary'}`}>
               SYMPATHERM
@@ -133,7 +133,7 @@ export default function Header() {
 
           {/* Mobile Toggle */}
           <button
-            className={`lg:hidden z-10 p-2 -mr-2 transition-colors ${isTransparent ? 'text-white' : 'text-secondary'}`}
+            className={`lg:hidden relative z-40 p-2 -mr-2 transition-colors ${isTransparent ? 'text-white' : 'text-secondary'}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Menü schließen' : 'Menü öffnen'}
             aria-expanded={isOpen}

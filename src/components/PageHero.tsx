@@ -51,7 +51,7 @@ export default function PageHero({ title, description, breadcrumbs, image }: Pro
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
       {/* Content */}
-      <div className="relative max-w-[1200px] mx-auto px-5 lg:px-6 h-[320px] lg:h-[380px] flex flex-col justify-end pb-12 lg:pb-14">
+      <div className="relative max-w-[1200px] mx-auto px-5 lg:px-6 min-h-[360px] lg:min-h-[420px] flex flex-col justify-end pt-24 lg:pt-28 pb-12 lg:pb-14">
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="flex items-center gap-1.5 text-sm text-white/40">
             {breadcrumbs.map((crumb, i) => (
