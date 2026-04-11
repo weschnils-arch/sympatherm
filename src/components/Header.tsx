@@ -43,7 +43,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
       <nav
-        className={`w-full border-b transition-all duration-500 ${
+        className={`relative z-50 w-full border-b transition-all duration-500 ${
           isTransparent
             ? 'bg-transparent border-white/10'
             : 'bg-white/70 backdrop-blur-xl backdrop-saturate-150 border-white/30 shadow-sm shadow-black/[0.04]'
@@ -52,7 +52,7 @@ export default function Header() {
       >
         <div className="max-w-[1200px] mx-auto px-5 lg:px-6 flex items-center justify-between h-16 lg:h-[72px]">
           {/* Logo */}
-          <Link to="/" className="relative flex items-center gap-2 z-40" aria-label="SYMPATHERM Startseite">
+          <Link to="/" className="flex items-center gap-2" aria-label="SYMPATHERM Startseite">
             <img src="/favicon.png" alt="" className="h-6 w-6 object-contain" />
             <span className={`font-body font-bold tracking-[0.15em] text-[17px] transition-colors duration-500 ${isTransparent ? 'text-white' : 'text-secondary'}`}>
               SYMPATHERM
@@ -133,7 +133,7 @@ export default function Header() {
 
           {/* Mobile Toggle */}
           <button
-            className={`lg:hidden relative z-40 p-2 -mr-2 transition-colors ${isTransparent ? 'text-white' : 'text-secondary'}`}
+            className={`lg:hidden p-2 -mr-2 transition-colors ${isTransparent ? 'text-white' : 'text-secondary'}`}
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Menü schließen' : 'Menü öffnen'}
             aria-expanded={isOpen}
@@ -143,8 +143,8 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Mobile Menu - solid white, full screen */}
-      <div className={`fixed inset-0 bg-white z-30 lg:hidden transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      {/* Mobile Menu - glassmorphism frosted overlay */}
+      <div className={`fixed inset-0 z-40 lg:hidden bg-white/75 backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300 ${isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
         <div className="pt-28 px-6 pb-8 h-full overflow-y-auto">
           <div className="flex flex-col">
             <Link to="/" className={`py-3.5 text-lg font-medium font-body border-b border-border ${location.pathname === '/' ? 'text-primary' : 'text-secondary'}`}>
